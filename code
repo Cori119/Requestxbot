@@ -1,0 +1,44 @@
+import discord
+import asyncio
+import random
+from discord.ext.commands import Bot
+from discord.ext import commands
+from discord.ext import commands
+
+
+client = discord.Client()
+bot = discord.Client()
+bot_prefix= "-"
+client = commands.Bot(command_prefix=bot_prefix)
+
+
+
+@client.event
+async def on_ready():
+    print("Bot is online and is connected to discord!")
+    await client.change_presence(game=discord.Game(name='p.Request for instuctions'))
+    client.remove_command("help")
+
+
+@client.command(pass_context=True, aliases=['HelpRequest', 'RequestHelp', 'helprequest', 'RH', 'rh', 'Rh'] )
+async def requesthelp(ctx):
+    embed=discord.Embed(title="p.HelpRequest", description="To request a item follow these steps!", color=0x17ffff)
+    embed.add_field(name='p.Request (message)', value='This will send the request for items(you can also use p.rh or p.RH)', inline=False)
+    await client.whisper(embed = embed)
+    await client.say("I've sent them to your DMs!")
+
+
+@client.command(pass_context=True, aliases=['Request'])
+async def request(ctx, *args):
+    message = '{0.author.mention}'
+    mesg = ' '.join(args)
+    member = ctx.message.author
+    embed=discord.Embed(title="Request", color=0x17eeff)
+    embed.add_field(name='Name:', value=('Request by {0}'.format(member)), inline=False)
+    embed.add_field(name='Request:', value=str(mesg), inline=True)
+    await client.send_message(discord.Object(id='449015048879472641'), embed=embed)
+
+
+
+
+client.run("NDQ4OTAxMjI5OTA1NTc1OTM3.DeeRLQ.O7TtbHPE7nYLqBW8yOmaNu_jynM")
